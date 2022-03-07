@@ -33,4 +33,5 @@ git config --global github.user "$GH_USER"
 
 ## Credits
 jessfraz's [dotfiles](https://github.com/jessfraz/dotfiles)
+
 amix's [vimrc](https://github.com/amix/vimrc)
