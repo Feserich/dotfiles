@@ -18,9 +18,12 @@ dotfiles: ## Installs the dotfiles.
 		f=$$(basename $$file); \
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
-
-	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-
+	mkdir -p $(HOME)/.config;
+	for dir in $(shell find $(CURDIR) -name "i3" -o -name "i3status-rust" -o -name "rofi"); do \
+		f=$$(basename $$dir); \
+		ln -sfn $$dir $(HOME)/.config; \
+	done; \
+	ln -snf $(CURDIR)/i3 $(HOME)/.config/sway;
 
 .PHONY: help
 help:
