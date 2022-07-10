@@ -19,11 +19,10 @@ dotfiles: ## Installs the dotfiles.
 		ln -sfn $$file $(HOME)/$$f; \
 	done; \
 	mkdir -p $(HOME)/.config;
-	for dir in $(shell find $(CURDIR) -name "i3" -o -name "i3status-rust" -o -name "rofi"); do \
+	for dir in $(shell find $(CURDIR) -name "i3" -o -name "i3status-rust" -o -name "rofi" -o -name "sway"); do \
 		f=$$(basename $$dir); \
 		ln -sfn $$dir $(HOME)/.config; \
 	done; \
-	ln -snf $(CURDIR)/i3 $(HOME)/.config/sway;
 
 .PHONY: help
 help:

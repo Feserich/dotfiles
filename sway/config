@@ -6,10 +6,7 @@ set $mod Mod1
 set $term gnome-terminal --hide-menubar
 set $menu rofi -show drun
 set $window rofi -show window
-#set $barcmd i3status --config ~/.config/i3/status.conf
-#set $barcmd i3blocks -c ~/.config/i3blocks/config
-set $barcmd i3status-rs ~/.config/i3status-rust/work_config.toml
-set $lockcmd i3lock
+set $barcmd i3status-rs ~/.config/i3status-rust/home_config.toml
 
 # Home row direction keys, like vim
 set $left h
@@ -22,7 +19,6 @@ set $right l
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:Monospace 12
-
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -37,6 +33,10 @@ floating_modifier $mod
 floating_minimum_size 150 x 150
 floating_maximum_size 2500 x 1500
 
+# bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Tab                workspace next
+bindsym $mod+Shift+Tab          workspace prev
+
 # start a terminal
 bindsym $mod+Return exec $term
 
@@ -46,17 +46,21 @@ bindsym $mod+d exec $menu
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# switching window with win+tab
-# bindsym $mod+Tab exec --no-startup-id $window
-# bindsym $mod+Tab workspace back_and_forth
-bindsym $mod+Tab                workspace next
-bindsym $mod+Shift+Tab          workspace prev
+# spotify: no border
+for_window [class="^Spotify$"] border none
+for_window [class="^Spotify Premium$"] border none
 
+# skype, steam, wine: float Gimp
 # for_window [class="Code"] floating enable
 # for_window [class="Firefox"] floating enable
+# for_window [class="Gimp"] floating enable
+# for_window [class="google-chrome"] floating enable
+# for_window [class="Google-chrome"] floating enable
+# for_window [class="OpenSCAD"] floating enable
+for_window [class="Skype"] floating enable
 
-
-
+# lock screen
+# bindsym $mod+l exec $lockcmd -c 111111
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -141,19 +145,15 @@ bindsym XF86AudioMicMute exec amixer set Capture toggle # mute mic
 bindsym XF86MonBrightnessUp exec sudo light -A 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
-# Screenshots
-# Screenshot fullscreen
-#bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
-# Screenshot fullscreen, sway
-#bindsym Shift+Print exec "swaygrab ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
-# Screenshot with selection
-#bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
-# Screenshot capture, sway
-#bindsym Shift+Print exec "swaygrab -c ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
-# Screenshot current focused window
-#bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
-# Screenshot current focused window, sway
-#bindsym Shift+Print exec "swaygrab --focused ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+# Screenshots:
+# Super+P: Current window
+bindsym $mod+p       exec grimshot save active
+# Super+Shift+p: Select area
+bindsym $mod+Shift+p exec grimshot save area
+# Super+Alt+p Current output
+bindsym $mod+space+p  exec grimshot save output
+# Super+Ctrl+p Select a window
+bindsym $mod+Ctrl+p  exec grimshot save window
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -161,9 +161,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exit
-
-default_border pixel 1
-default_floating_border pixel 1
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -207,23 +204,48 @@ mode "$mode_system" {
 }
 bindsym $mod+Pause mode "$mode_system"
 
-
-
 # i3status bar config
 bar {
-	font pango:DejaVu Sans Mono, FontAwesome 12
+	font pango:monospace 14
     position top
-	status_command $barcmd
+	status_command $barcmd 
 }
 
-
 ###
-### i3 and work specific
+### Sway & Home specific 
 ###
 
-# start vmware user 
-exec --no-startup-id vmware-user
-# set background picture
-exec --no-startup-id feh --bg-scale ~/Pictures/7_ZF_ProAI.jpg
 
+# Inputs for sway
+# Reverse scroll
+input "type:touchpad" {
+    natural_scroll enabled
+    left_handed disabled
+    pointer_accel 0.5
+}
+input "type:keyboard" {
+    xkb_layout de 
+}
 
+# Sway backgroud and monitor setup
+#output "*" background ${HOME}/Pictures/central-park2.jpg fill
+output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 1440 0 transform 270
+output 'Lenovo Group Limited P27h-20 V906EV4L' pos 2560 0 
+
+# HiDPI for sway
+output eDP-1 scale 1
+
+# start background apps
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id nextcloud &
+exec --no-startup-id dropbox &
+
+# bugfix for slow startup of GTK apps 
+exec systemctl --user import-environment
+
+# i3-gaps settings
+gaps inner 10
+smart_gaps on
+# hide the title bar of every window
+default_border pixel 1
+default_floating_border pixel 1
