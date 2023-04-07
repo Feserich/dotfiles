@@ -32,3 +32,10 @@ for file in ~/.{aliases,functions,extra}; do
 done
 unset file
 
+# enable vi keybindings in zsh
+bindkey -v
+
+# activate fzf in zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+

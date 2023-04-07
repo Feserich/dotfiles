@@ -1,54 +1,78 @@
-
+[theme]
 theme = "solarized-dark"
-#icons = "awesome"
+[icons]
 icons = "material-nf"
 
 [[block]]
-block = "music"
-player = "spotify"
-buttons = ["play", "next"]
+block = "custom"
+command = "spt playback --format"
+interval = 3
+[[block.click]]
+button = "left"
+cmd = "spt playback --toggle"
 
 [[block]]
 block = "disk_space"
 path = "/"
-alias = "/"
 info_type = "available"
-unit = "GB"
+format = " $icon / $available "
+alert_unit = "GB"
 interval = 20
 warning = 20.0
 alert = 10.0
+[[block.click]]
+button = "right"
+cmd = "/usr/bin/baobab"
+
+[[block]]
+block = "disk_space"
+path = "/home"
+info_type = "available"
+format = " $icon /home $available "
+alert_unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+[[block.click]]
+button = "right"
+cmd = "/usr/bin/baobab"
 
 [[block]]
 block = "memory"
-display_type = "memory"
-format_mem = "{mem_used}"
-clickable = false
+format = " $icon $mem_used.eng(w:3) "
+format_alt = " $icon $mem_used_percents.eng(w:1) "
+interval = 10
 
 [[block]]
 block = "cpu"
-interval = 1
-
-[[block]]
-block = "load"
-interval = 1
-format = "{1m}"
+interval = 3
+format = " $icon $utilization "
+format_alt = " $icon $barchart $frequency.eng(w:3) "
 
 [[block]]
 block = "net"
-device = "wlp61s0"
-format = "{ssid}"
-interval = 5
+format = " $icon $ip "
+format_alt = " $icon {$signal_strength $ssid $frequency|wire} via $device "
+[[block.click]]
+button = "right"
+cmd = "/usr/bin/gnome-control-center wifi"
 
 [[block]]
 block = "pacman"
 interval = 600
-format = "{pacman} + {aur} = {both} updates available"
-format_singular = "{both} update available"
-format_up_to_date = "system up to date"
+error_interval = 300
+format = " $icon $pacman + $aur = $both updates available "
+format_singular = " $icon $both update available "
+format_up_to_date = " $icon system up to date "
 critical_updates_regex = "(linux|linux-lts|linux-zen)"
 # aur_command should output available updates to stdout (ie behave as echo -ne "update\n")
 aur_command = "yay -Qua"
-hide_when_uptodate = true
+[[block.click]]
+button = "right"
+cmd = "/usr/bin/pamac-manager"
+[[block.click]]
+button = "left"
+update = true
 
 [[block]]
 block = "backlight"
@@ -56,6 +80,7 @@ device = "intel_backlight"
 
 [[block]]
 block = "sound"
+max_vol = 100
 
 [[block]]
 block = "battery"
@@ -64,5 +89,7 @@ if_command = "test -e /sys/class/power_supply/BAT0"
 [[block]]
 block = "time"
 interval = 5
-format = "%a %d/%m %R"
+[block.format]
+full = " $icon $timestamp.datetime(f:'%a %v %R', l:en_US) "
+short = " $icon $timestamp.datetime(f:%R) "
 

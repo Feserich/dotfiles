@@ -229,7 +229,8 @@ input "type:keyboard" {
 
 # Sway backgroud and monitor setup
 #output "*" background ${HOME}/Pictures/central-park2.jpg fill
-output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 1440 0 transform 270
+# output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 1440 0 transform 270
+output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 640 0 transform 0
 output 'Lenovo Group Limited P27h-20 V906EV4L' pos 2560 0 
 
 # HiDPI for sway
@@ -237,6 +238,7 @@ output eDP-1 scale 1
 
 # start background apps
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec /usr/bin/nm-applet --no-agent &
 exec --no-startup-id nextcloud &
 exec --no-startup-id dropbox &
 
