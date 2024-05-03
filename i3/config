@@ -17,12 +17,28 @@ set $down j
 set $up k
 set $right l
 
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+exec --no-startup-id vmware-user &
+exec --no-startup-id feh --bg-scale ~/Pictures/7_ZF_ProAI.jpg &
+exec --no-startup-id picom &
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:Monospace 12
 
+# HiDPI for sway
+# output eDP-1 scale 1
+
+# Inputs for sway
+# Reverse scroll
+#input "2:7:SynPS/2_Synaptics_TouchPad" {
+#    natural_scroll enabled
+#    left_handed disabled
+#    pointer_accel 0.9
+#}
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -52,9 +68,21 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Tab                workspace next
 bindsym $mod+Shift+Tab          workspace prev
 
+# spotify: no border
+for_window [class="^Spotify$"] border none
+for_window [class="^Spotify Premium$"] border none
+
+# skype, steam, wine: float Gimp
 # for_window [class="Code"] floating enable
 # for_window [class="Firefox"] floating enable
+# for_window [class="Gimp"] floating enable
+# for_window [class="google-chrome"] floating enable
+# for_window [class="Google-chrome"] floating enable
+# for_window [class="OpenSCAD"] floating enable
+# for_window [class="Skype"] floating enable
 
+# lock screen
+# bindsym $mod+l exec $lockcmd -c 111111
 
 
 
@@ -162,8 +190,13 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exit
 
+# i3-gaps settings
+gaps inner 7
+smart_gaps on
+# hide the title bar of every window
 default_border pixel 1
 default_floating_border pixel 1
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -217,13 +250,10 @@ bar {
 }
 
 
-###
-### i3 and work specific
-###
+# Sway backgroud
+# output "*" background ${HOME}/Pictures/central-park2.jpg fill
 
-# start vmware user 
-exec --no-startup-id vmware-user
-# set background picture
-exec --no-startup-id feh --bg-scale ~/Pictures/7_ZF_ProAI.jpg
-
+# run the merge for good colors
+#exec xrdb -merge $HOME/.Xresources
+#exec xrdb -merge $HOME/.Xdefaults
 

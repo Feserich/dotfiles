@@ -26,6 +26,7 @@ base() {
 		bzip2 \
 		curl \
 		file \
+		fzf \
 		gcc \
 		git \
 		grep \
@@ -42,7 +43,7 @@ base() {
 		tar \
 		tree \
 		unzip \
-		vim \
+		neovim \
 		zip \
 		--no-install-recommends
 
@@ -51,6 +52,35 @@ base() {
 	apt clean -y
 
 }
+
+
+work() {
+
+	# TODO adapt the list of apps and make it compatible for Ubuntu and Arch Linux
+	apt update || true
+	apt -y upgrade
+
+	apt install -y \
+		minicom \
+		htop \
+		cmake \
+		iperf3 \
+		vscode \
+		docker.io \
+		docker-compose \
+		python3-pip \
+		sshpass \
+		meld \
+		gparted \
+		tmux
+		--no-install-recommends
+
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
+
+}
+
 
 
 get_dotfiles() {
@@ -75,6 +105,15 @@ get_dotfiles() {
 
 install_zsh()
 {
+
+	apt update || true
+	apt -y upgrade
+	apt install -y zsh
+
+	apt autoremove -y
+	apt autoclean -y
+	apt clean -y
+
 	#TODO install zsh in apt or pamac
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/powerlevel10k
 	git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
@@ -100,8 +139,11 @@ main() {
 
 	if [[ $cmd == "base" ]]; then
 		check_is_sudo
-
 		#base
+
+	elif [[ $cmd == "work" ]]; then
+		check_is_sudo
+		work
 
 	elif [[ $cmd == "dotfiles" ]]; then
 		get_dotfiles

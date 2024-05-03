@@ -32,10 +32,13 @@ for file in ~/.{aliases,functions,extra}; do
 done
 unset file
 
-# enable vi keybindings in zsh
+# To customize prompt, run `p10k configure` or edit ~/git_repos/dotfiles/.p10k.zsh.
+[[ ! -f ~/git_repos/dotfiles/.p10k.zsh ]] || source ~/git_repos/dotfiles/.p10k.zsh
+
+# enable vi navigation in zsh
 bindkey -v
 
-# activate fzf in zsh
+# enalbe fzf in zsh
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
