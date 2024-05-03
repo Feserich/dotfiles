@@ -208,11 +208,11 @@ bindsym $mod+Pause mode "$mode_system"
 bar {
 	font pango:monospace 14
     position top
-	status_command $barcmd 
+	status_command $barcmd
 }
 
 ###
-### Sway & Home specific 
+### Sway & Home specific
 ###
 
 
@@ -224,25 +224,26 @@ input "type:touchpad" {
     pointer_accel 0.5
 }
 input "type:keyboard" {
-    xkb_layout de 
+    xkb_layout de
 }
 
 # Sway backgroud and monitor setup
 #output "*" background ${HOME}/Pictures/central-park2.jpg fill
 # output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 1440 0 transform 270
 output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 640 0 transform 0
-output 'Lenovo Group Limited P27h-20 V906EV4L' pos 2560 0 
+output 'Lenovo Group Limited P27h-20 V906EV4L' pos 2560 0
 
 # HiDPI for sway
 output eDP-1 scale 1
 
 # start background apps
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec /usr/bin/nm-applet --no-agent &
 exec --no-startup-id nextcloud &
 exec --no-startup-id dropbox &
 
-# bugfix for slow startup of GTK apps 
+# bugfix for slow startup of GTK apps
 exec systemctl --user import-environment
 
 # i3-gaps settings

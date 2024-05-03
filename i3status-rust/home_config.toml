@@ -81,6 +81,9 @@ device = "intel_backlight"
 [[block]]
 block = "sound"
 max_vol = 100
+[[block.click]]
+button = "left"
+cmd = "env XDG_CURRENT_DESKTOP=GNOME /usr/bin/gnome-control-center"
 
 [[block]]
 block = "battery"
