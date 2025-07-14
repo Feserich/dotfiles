@@ -7,6 +7,7 @@ set $term gnome-terminal --hide-menubar
 set $menu rofi -show drun
 set $window rofi -show window
 set $barcmd i3status-rs ~/.config/i3status-rust/home_config.toml
+set $lockcmd swaylock -i ~/Pictures/Wallpaper/Linux/archlinux_logo-wallpaper-2560x1440.jpg
 
 # Home row direction keys, like vim
 set $left h
@@ -60,7 +61,7 @@ for_window [class="^Spotify Premium$"] border none
 for_window [class="Skype"] floating enable
 
 # lock screen
-# bindsym $mod+l exec $lockcmd -c 111111
+bindsym Mod4+l exec $lockcmd -c 111111
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -230,11 +231,12 @@ input "type:keyboard" {
 # Sway backgroud and monitor setup
 #output "*" background ${HOME}/Pictures/central-park2.jpg fill
 # output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 1440 0 transform 270
-output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 640 0 transform 0
-output 'Lenovo Group Limited P27h-20 V906EV4L' pos 2560 0
-
+# output 'Dell Inc. DELL U2414H 9TG4648L7DLL' pos 640 0 transform 0
+output 'Lenovo Group Limited L32p-30 U511GBR7' pos 3840 0
+output 'Lenovo Group Limited P27h-20 V906EV4L' pos 1280 340
 # HiDPI for sway
 output eDP-1 scale 1
+output * bg ~/Pictures/Wallpaper/Linux/archlinux_logo-wallpaper-2560x1440.jpg fit
 
 # start background apps
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
